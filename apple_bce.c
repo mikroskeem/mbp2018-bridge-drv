@@ -3,6 +3,7 @@
 #include <linux/crc32.h>
 #include "audio/audio.h"
 
+static bool bce_aaudio_enabled = true;
 static dev_t bce_chrdev;
 static struct class *bce_class;
 
@@ -404,7 +405,11 @@ static int __init apple_bce_module_init(void)
     if (result)
         goto fail_drv;
 
-    aaudio_module_init();
+    if (bce_aaudio_enabled) {
+        aaudio_module_init();
+    } else {
+        pr_warn("bce: not enabling audio\n");
+    }
 
     return 0;
 
@@ -434,3 +439,6 @@ MODULE_DESCRIPTION("Apple BCE Driver");
 MODULE_VERSION("0.01");
 module_init(apple_bce_module_init);
 module_exit(apple_bce_module_exit);
+
+module_param_named(aaudio_enabled, bce_aaudio_enabled, bool, 0444);
+MODULE_PARM_DESC(aaudio_enabled, "Whether to enable T2 audio or not");
