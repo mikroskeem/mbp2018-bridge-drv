@@ -408,7 +408,7 @@ static int __init apple_bce_module_init(void)
     if (bce_aaudio_enabled) {
         aaudio_module_init();
     } else {
-        pr_warn("bce: not enabling audio\n");
+        pr_warn("apple-bce: not enabling audio\n");
     }
 
     return 0;
