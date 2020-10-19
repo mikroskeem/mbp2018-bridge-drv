@@ -5,3 +5,4 @@
 *.order
 Module.symvers
 compile_commands*.json
+.clangd/
